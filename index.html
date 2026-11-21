@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Azha Miji | Portfolio</title>
+  <meta name="description" content="Personal portfolio of Azha Miji, university student at Pacific States University.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+/* ---------- Design tokens ---------- */
+:root{
+  --cream:#F8F5EF; --beige:#E9E1D5; --brown:#4A342B; --taupe:#A99B8B; --white:#FFFFFF;
+  --muted:#6F5F52;            /* darker taupe for readable secondary text */
+  --bg:var(--cream); --surface:var(--white); --soft:var(--beige);
+  --text:var(--brown); --text2:var(--muted); --line:#D9CFC0; --btn-bg:var(--brown); --btn-fg:var(--cream);
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"DM Sans",system-ui,sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#211815; --surface:#2C211D; --soft:#3A2D27; --text:#F3ECE2; --text2:#C9BAA8;
+  --line:#4B3B33; --btn-bg:#E9E1D5; --btn-fg:#2A1F1A;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--bg);color:var(--text);font:400 1.05rem/1.7 var(--sans);transition:background .4s,color .4s}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+.skip{position:absolute;left:-999px}.skip:focus{left:1rem;top:1rem;background:var(--surface);padding:.5rem 1rem;z-index:99}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.05;letter-spacing:-.01em}
+h1{font-size:clamp(3.2rem,8vw,6.5rem)}
+h2{font-size:clamp(2.2rem,4.5vw,3.5rem);margin-bottom:1.2rem}
+section{padding:6rem clamp(1.25rem,6vw,6rem);max-width:1300px;margin:auto}
+
+/* ---------- Navigation ---------- */
+.nav{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;
+  padding:1rem clamp(1.25rem,6vw,6rem);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{font:600 1.6rem var(--serif);text-decoration:none}
+.links{display:flex;gap:2rem;align-items:center}
+.links a{text-decoration:none;font-size:.95rem;position:relative}
+.links a::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;background:currentColor;transition:width .3s}
+.links a:hover::after{width:100%}
+.theme-btn,.menu-btn{font:inherit;font-size:.9rem;background:none;color:var(--text);border:1px solid var(--line);border-radius:99px;padding:.4rem 1rem;cursor:pointer;transition:background .3s}
+.theme-btn:hover,.menu-btn:hover{background:var(--soft)}
+.menu-btn{display:none}
+
+/* ---------- Buttons ---------- */
+.btns{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2.2rem}
+.btn{display:inline-block;font:500 1rem var(--sans);text-decoration:none;padding:.95rem 2rem;border-radius:99px;border:1px solid var(--btn-bg);cursor:pointer;transition:transform .3s,background .3s,color .3s}
+.btn.solid{background:var(--btn-bg);color:var(--btn-fg)}
+.btn.line{background:transparent;color:var(--text)}
+.btn:hover{transform:translateY(-3px)}
+.btn.line:hover{background:var(--btn-bg);color:var(--btn-fg)}
+
+/* ---------- Hero ---------- */
+.hero{min-height:calc(100vh - 70px);display:grid;grid-template-columns:1.3fr 1fr;gap:3rem;align-items:center}
+.lead{max-width:30rem;margin-top:1.6rem;color:var(--text2);font-size:1.2rem}
+.hero-art{position:relative;height:min(65vh,520px)}
+.arch{position:absolute;border-radius:999px 999px 0 0}
+.a1{inset:0 18% 0 0;background:var(--soft)}
+.a2{inset:14% 0 0 36%;background:var(--taupe);opacity:.55}
+.orb{position:absolute;width:34%;aspect-ratio:1;border-radius:50%;background:var(--brown);left:8%;bottom:10%;animation:float 9s ease-in-out infinite}
+[data-theme="dark"] .orb{background:var(--beige)}
+@keyframes float{50%{transform:translateY(-14px)}}
+
+/* ---------- Welcome ---------- */
+.welcome{padding-top:2rem;padding-bottom:2rem}
+.welcome-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.4rem 1rem;align-items:end;background:var(--surface);border:1px solid var(--line);padding:2rem;border-radius:20px}
+.welcome-form label{grid-column:auto;font-size:.9rem;color:var(--text2)}
+input,select{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;width:100%}
+.welcome-msg{font:500 1.7rem/1.3 var(--serif);margin-top:1.2rem;min-height:2.4rem}
+
+/* ---------- About ---------- */
+.about{display:grid;grid-template-columns:1fr 1.2fr;gap:4rem;align-items:center}
+.portrait{aspect-ratio:4/5;border-radius:999px 999px 20px 20px;background:var(--soft);display:grid;place-items:center;color:var(--text2);font-size:.95rem;border:1px solid var(--line)}
+.about-text p{margin-bottom:1rem;color:var(--text2)}
+.details{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem 2rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--line)}
+.details dt{font-size:.85rem;color:var(--text2)}.details dd{font:500 1.25rem var(--serif)}
+
+/* ---------- Projects ---------- */
+.filters{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem}
+.chip{font:inherit;font-size:.92rem;color:var(--text);background:transparent;border:1px solid var(--line);border-radius:99px;padding:.45rem 1.2rem;cursor:pointer;transition:all .3s}
+.chip:hover{background:var(--soft)}
+.chip.active{background:var(--btn-bg);color:var(--btn-fg);border-color:var(--btn-bg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.8rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px 6px 120px 6px;padding:2.2rem;display:flex;flex-direction:column;gap:1rem;transition:transform .4s,box-shadow .4s;animation:in .5s both}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 40px -22px rgba(74,52,43,.45)}
+.card h3{font-size:2rem}
+.card p{color:var(--text2);font-size:.98rem}
+.card strong{font-weight:500;color:var(--text)}
+.tags{display:flex;gap:.5rem;flex-wrap:wrap;list-style:none;padding:0}
+.tags li{font-size:.8rem;background:var(--soft);border-radius:99px;padding:.2rem .8rem}
+.card.placeholder{border-style:dashed;background:transparent}
+.empty{color:var(--text2)}
+@keyframes in{from{opacity:0;transform:translateY(12px)}}
+
+/* ---------- Contact ---------- */
+.contact{text-align:center}
+.contact p{color:var(--text2)}
+.social{list-style:none;padding:0;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+.social a{display:flex;align-items:center;gap:.6rem;text-decoration:none;border:1px solid var(--line);border-radius:99px;padding:.7rem 1.4rem;transition:background .3s,transform .3s}
+.social a:hover{background:var(--soft);transform:translateY(-3px)}
+.social svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.footer{border-top:1px solid var(--line);padding:2rem;text-align:center;color:var(--text2);font-size:.9rem}
+
+/* ---------- Motion (one hero entrance + gentle section reveal) ---------- */
+.rise{animation:in .9s cubic-bezier(.2,.7,.2,1) both}.d1{animation-delay:.15s}.d2{animation-delay:.3s}
+.js .fade{opacity:0;transition:opacity .9s}.js .fade.show{opacity:1}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.js .fade{opacity:1}}
+
+/* ---------- Résumé page ---------- */
+.resume{max-width:860px;margin:3rem auto;padding:3rem clamp(1.5rem,5vw,4rem);background:var(--surface);border:1px solid var(--line)}
+.resume h1{font-size:3.2rem}.resume h2{font-size:1.7rem;margin:2.2rem 0 .8rem;padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+.resume .sub{color:var(--text2)}.resume ul{padding-left:1.2rem;color:var(--text2)}
+.resume .toolbar{display:flex;gap:1rem;justify-content:center;margin:2rem auto 0;flex-wrap:wrap}
+.ph{background:var(--soft);padding:0 .3rem;border-radius:4px}
+
+/* ---------- Responsive ---------- */
+@media (max-width:820px){
+  .menu-btn{display:block}
+  .links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:flex-start;gap:1.2rem;padding:1.5rem clamp(1.25rem,6vw,6rem);background:var(--bg);border-bottom:1px solid var(--line)}
+  .links.open{display:flex}
+  .hero,.about{grid-template-columns:1fr}
+  .hero{padding-top:3rem}.hero-art{height:300px}
+  .about-visual{max-width:320px}
+  section{padding-top:4rem;padding-bottom:4rem}
+}
+@media print{.nav,.toolbar,.footer,.skip{display:none}.resume{border:0;margin:0}body{background:#fff;color:#000}}
+
+.resume .name{font:500 clamp(2.4rem,6vw,3.2rem)/1.1 var(--serif);margin-bottom:.3rem}
+.resume-sec{padding-top:4rem}
+@media print{body.print-resume header,body.print-resume main>section:not(#resume),body.print-resume footer{display:none}body.print-resume .resume-sec{padding:0}body.print-resume .resume-sec>h2,body.print-resume .resume-sec>.btns,body.print-resume .resume-sec>.sub{display:none}}
+</style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <a class="logo" href="#home" aria-label="Azha Miji, home">Azha Miji</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <nav id="navLinks" class="links" aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#resume">Résumé</a>
+      <a href="#contact">Contact</a>
+      <button id="themeBtn" class="theme-btn" aria-pressed="false">Dark mode</button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-text">
+        <h1 class="rise">Hello, I’m Azha Miji.</h1>
+        <p class="lead rise d1">A university student passionate about learning, creativity, technology, and building meaningful experiences.</p>
+        <div class="btns rise d2">
+          <a class="btn solid" href="#projects">Explore My Work</a>
+          <a class="btn line" href="#resume">View My Résumé</a>
+        </div>
+      </div>
+      <div class="hero-art rise d2" aria-hidden="true">
+        <div class="arch a1"></div>
+        <div class="arch a2"></div>
+        <div class="orb"></div>
+      </div>
+    </section>
+
+    <!-- WELCOME (interactive feature #3) -->
+    <section class="welcome fade" aria-labelledby="wTitle">
+      <h2 id="wTitle">Say hello</h2>
+      <form id="welcomeForm" class="welcome-form" novalidate>
+        <label for="visitorName">Your name</label>
+        <input id="visitorName" type="text" placeholder="Type your name" autocomplete="given-name">
+        <label for="visitorInterest">What brings you here?</label>
+        <select id="visitorInterest">
+          <option value="">Choose one</option>
+          <option value="recruiter">I’m hiring or recruiting</option>
+          <option value="student">I’m a fellow student</option>
+          <option value="professor">I’m reviewing this project</option>
+          <option value="curious">Just looking around</option>
+        </select>
+        <button class="btn solid" type="submit">Greet me</button>
+      </form>
+      <p id="welcomeMsg" class="welcome-msg" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about fade" id="about">
+      <div class="about-visual" aria-hidden="true">
+        <div class="portrait"><span>Add your photo here</span></div>
+      </div>
+      <div class="about-text">
+        <h2>About me</h2>
+        <p>I’m a university student at Pacific States University who enjoys turning curiosity into something tangible. I’m drawn to the places where health, wellness, technology, and business meet, and I like building things that are thoughtful, clear, and useful to the people who use them.</p>
+        <p>This website is my first full project in programming. It is also a starting point for the work I want to share in the future.</p>
+        <dl class="details">
+          <div><dt>Education</dt><dd>Pacific States University</dd></div>
+          <div><dt>Interests</dt><dd>Health, wellness, technology, business</dd></div>
+          <div><dt>Currently learning</dt><dd>HTML, CSS, JavaScript</dd></div>
+          <div><dt>Location</dt><dd>[Add your city]</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects fade" id="projects">
+      <h2>Selected work</h2>
+      <div class="filters" id="filters" role="group" aria-label="Filter projects by category">
+        <button class="chip active" data-filter="all" aria-pressed="true">All</button>
+        <!-- Filter buttons for new categories are created automatically by script.js -->
+      </div>
+      <div class="grid" id="projectGrid"></div>
+      <p id="emptyMsg" class="empty" hidden>No projects in this category yet. Check back soon.</p>
+    </section>
+
+    <!-- RÉSUMÉ (edit the [bracketed] placeholders) -->
+    <section class="resume-sec fade" id="resume" aria-labelledby="rTitle">
+      <h2 id="rTitle">Résumé</h2>
+      <div class="resume">
+      <p class="name">Azha Miji</p>
+      <p class="sub"><span class="ph">[City, State]</span> · <span class="ph">[email]</span> · <span class="ph">[LinkedIn URL]</span> · <span class="ph">[phone, optional]</span></p>
+      <h2>Profile</h2>
+      <p>University student passionate about learning, creativity, technology, and building meaningful experiences, with academic interests in health, wellness, technology, and business.</p>
+      <h2>Education</h2>
+      <p><strong>Pacific States University</strong><br><span class="sub"><span class="ph">[Degree / major]</span> · <span class="ph">[Expected graduation]</span></span></p>
+      <h2>Projects</h2>
+      <p><strong>Personal Portfolio Website</strong></p>
+      <ul><li>Designed and built a responsive portfolio using HTML5, CSS3, and vanilla JavaScript.</li>
+          <li>Implemented a project filter, dark mode toggle, and interactive welcome feature.</li></ul>
+      <h2>Experience</h2>
+      <p class="ph">[Add jobs, internships, or volunteering: role, organization, dates, 2–3 bullet points]</p>
+      <h2>Skills</h2>
+      <ul><li>HTML5, CSS3, JavaScript</li><li><span class="ph">[Add other skills, tools, languages]</span></li></ul>
+      <h2>Activities and Achievements</h2>
+      <p class="ph">[Add clubs, leadership, awards. Leave out anything that isn’t true.]</p>
+    </div>
+      <div class="btns" style="justify-content:center">
+        <button class="btn solid" id="printResume">Download as PDF</button>
+      </div>
+      <p class="sub" style="text-align:center;color:var(--text2);margin-top:1rem">In the print window, choose “Save as PDF”.</p>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact fade" id="contact">
+      <h2>Let’s Connect</h2>
+      <p>Open to conversations about projects, internships, and ideas.</p>
+      <ul class="social">
+        <!-- TODO: replace the three links below with your real details -->
+        <li><a href="mailto:your.email@example.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email</a></li>
+        <li><a href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v5M8 8v.01M12 16v-5m0 2c0-1.5 1-2 2-2s2 .8 2 2.2V16"/></svg>LinkedIn</a></li>
+        <li><a href="https://www.instagram.com/your.handle" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".6"/></svg>Instagram</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer"><p>© <span id="year"></span> Azha Miji. Built with HTML, CSS, and JavaScript.</p></footer>
+  <script>
+/* =========================================================
+   Azha Miji Portfolio: script.js
+   Features: project data + filter, dark mode, welcome greeting
+   ========================================================= */
+
+/* ---------- 1. PROJECT DATA ----------
+   To add a project, copy one object into this array. Cards and filter
+   buttons are generated automatically (see renderProjects). */
+const projects = [
+  {
+    title: "Personal Portfolio Website",
+    categories: ["Web Design", "Programming"],
+    description: "A responsive personal website that introduces me, showcases my work, and links to my résumé and contact details.",
+    contribution: "I planned the design, wrote the content, and built every page and interactive feature myself.",
+    tech: ["HTML5", "CSS3", "JavaScript"]
+  },
+  {
+    // PLACEHOLDER: replace with a real project or delete
+    title: "Your next project",
+    categories: ["Wellness"],
+    description: "[Describe a health or wellness project here.]",
+    contribution: "[What did you do?]",
+    tech: ["[Tools used]"],
+    placeholder: true
+  },
+  {
+    // PLACEHOLDER: replace with a real project or delete
+    title: "Another future project",
+    categories: ["Business"],
+    description: "[Describe a business or technology project here.]",
+    contribution: "[What did you do?]",
+    tech: ["[Tools used]"],
+    placeholder: true
+  }
+];
+
+const grid = document.getElementById("projectGrid");
+const filterBar = document.getElementById("filters");
+const emptyMsg = document.getElementById("emptyMsg");
+
+/* FUNCTION: builds one project card from a project object */
+function createCard(p) {
+  const card = document.createElement("article");
+  card.className = "card" + (p.placeholder ? " placeholder" : "");
+  card.dataset.categories = p.categories.join("|");
+  card.innerHTML = `
+    <ul class="tags">${p.categories.map(c => `<li>${c}</li>`).join("")}</ul>
+    <h3>${p.title}</h3>
+    <p>${p.description}</p>
+    <p><strong>My contribution.</strong> ${p.contribution}</p>
+    <ul class="tags">${p.tech.map(t => `<li>${t}</li>`).join("")}</ul>`;
+  return card;
+}
+
+/* FUNCTION: renders every card and creates one filter button per category */
+function renderProjects() {
+  const seen = [];
+  // LOOP: go through each project, add its card, and collect unique categories
+  for (const p of projects) {
+    grid.appendChild(createCard(p));
+    for (const c of p.categories) {
+      if (!seen.includes(c)) seen.push(c);   // CONDITIONAL: only add new categories
+    }
+  }
+  seen.forEach(c => {
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.dataset.filter = c;
+    b.setAttribute("aria-pressed", "false");
+    b.textContent = c;
+    filterBar.appendChild(b);
+  });
+}
+
+/* FUNCTION: shows only cards that match the chosen category */
+function filterProjects(category) {
+  const cards = grid.querySelectorAll(".card");
+  let visible = 0;
+  // LOOP: check every card
+  for (const card of cards) {
+    const list = card.dataset.categories.split("|");
+    // CONDITIONAL (if / else): show the card if it matches, otherwise hide it
+    if (category === "all" || list.includes(category)) {
+      card.hidden = false;
+      visible++;
+    } else {
+      card.hidden = true;
+    }
+  }
+  emptyMsg.hidden = visible > 0;   // show the empty message only when nothing matches
+}
+
+/* EVENT LISTENER: one listener handles every filter button */
+filterBar.addEventListener("click", e => {
+  const btn = e.target.closest(".chip");
+  if (!btn) return;
+  filterBar.querySelectorAll(".chip").forEach(c => {
+    const on = c === btn;
+    c.classList.toggle("active", on);
+    c.setAttribute("aria-pressed", on);
+  });
+  filterProjects(btn.dataset.filter);
+});
+
+renderProjects();
+
+/* ---------- 2. DARK MODE ---------- */
+const themeBtn = document.getElementById("themeBtn");
+
+/* FUNCTION: applies a theme and updates the button label */
+function setTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  const dark = theme === "dark";
+  themeBtn.textContent = dark ? "Light mode" : "Dark mode";
+  themeBtn.setAttribute("aria-pressed", dark);
+  try { localStorage.setItem("theme", theme); } catch (e) {}  // remember the choice
+}
+let saved = null;
+try { saved = localStorage.getItem("theme"); } catch (e) {}
+// CONDITIONAL: use the saved theme, otherwise follow the visitor's system setting
+setTheme(saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+themeBtn.addEventListener("click", () => {
+  setTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+});
+
+/* ---------- 3. INTERACTIVE WELCOME ---------- */
+/* FUNCTION: builds a personalised greeting from the visitor's input */
+function buildGreeting(name, interest) {
+  const hour = new Date().getHours();
+  let timeOfDay;
+  // CONDITIONAL (if / else if / else): choose greeting by time of day
+  if (hour < 12) timeOfDay = "Good morning";
+  else if (hour < 18) timeOfDay = "Good afternoon";
+  else timeOfDay = "Good evening";
+
+  // CONDITIONAL: handle an empty name
+  const who = name.trim() === "" ? "there" : name.trim();
+
+  // CONDITIONAL (switch): tailor the message to why they came
+  let extra;
+  switch (interest) {
+    case "recruiter":  extra = "Take a look at my résumé and projects."; break;
+    case "student":    extra = "Always happy to connect with fellow students."; break;
+    case "professor":  extra = "Thank you for reviewing my work."; break;
+    case "curious":    extra = "Enjoy exploring."; break;
+    default:           extra = "Welcome to my portfolio.";
+  }
+  return `${timeOfDay}, ${who}. ${extra}`;
+}
+document.getElementById("welcomeForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const name = document.getElementById("visitorName").value;
+  const interest = document.getElementById("visitorInterest").value;
+  document.getElementById("welcomeMsg").textContent = buildGreeting(name, interest);
+});
+
+/* ---------- 4. NAVIGATION, REVEAL, FOOTER ---------- */
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+menuBtn.addEventListener("click", () => {
+  const open = navLinks.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", open);
+});
+navLinks.addEventListener("click", e => {          // close the menu after choosing a link
+  if (e.target.tagName === "A") { navLinks.classList.remove("open"); menuBtn.setAttribute("aria-expanded", false); }
+});
+
+document.documentElement.classList.add("js");
+const io = "IntersectionObserver" in window
+  ? new IntersectionObserver(entries => entries.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add("show"); io.unobserve(en.target); }
+    }), { threshold: 0.12 })
+  : null;
+document.querySelectorAll(".fade").forEach(el => io ? io.observe(el) : el.classList.add("show"));
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* ---------- 5. RÉSUMÉ PRINT / SAVE AS PDF ---------- */
+/* FUNCTION: prints only the résumé section by adding a class the print CSS looks for */
+document.getElementById("printResume").addEventListener("click", () => {
+  document.body.classList.add("print-resume");
+  window.print();
+  document.body.classList.remove("print-resume");
+});
+</script>
+</body>
+</html>
